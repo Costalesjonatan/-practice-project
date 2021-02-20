@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 import com.proyecto.practica.model.Usuario;
 import com.proyecto.practica.repository.UsuarioRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class UserDetailsServiceImplementation implements UserDetailsService {
 	
 	@Autowired
