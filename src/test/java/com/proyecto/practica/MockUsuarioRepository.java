@@ -9,29 +9,39 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import com.demo.proyectoBackend.model.User;
 import com.proyecto.practica.model.Usuario;
 import com.proyecto.practica.repository.UsuarioRepository;
 
 public class MockUsuarioRepository implements UsuarioRepository{
 	
+	
+	//tenes que implementa los metodos mock para el test del userService o averigua bien como funciona mockito
 	private HashMap<Long, Usuario> usuarios = new HashMap<Long, Usuario>();
+	
 	@Override
 	public Usuario findByUserName(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		long id = 0;
+		
+		for(Long key : usuarios.keySet()) {
+			if(usuarios.get(key).getUsername().equals(username)) {
+				id = key;
+			}
+		}
+		if(id == 0) {
+			return null;
+		}
+		return usuarios.get(id);
 	}
 	
 	@Override
 	public Optional<Usuario> findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return Optional.ofNullable(usuarios.get(id));
 	}
 	
 	@Override
 	public <S extends Usuario> S save(S entity) {
-		// TODO Auto-generated method stub
-		return null;
+		usuarios.put(entity.getId(), entity);
+		return entity;
 	}
 	
 	@Override

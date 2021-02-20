@@ -12,6 +12,8 @@ import com.proyecto.practica.service.UsuarioService;
 
 class UserServiceImplementationTest {
 	
+	//aca tenes que seguir implementando los test
+	
 	private UsuarioRepository usuarioRepository;
 	private UsuarioService usuarioService;
 	
@@ -22,6 +24,6 @@ class UserServiceImplementationTest {
 	}
 	
 	private void givenUserRepository() {
-		usuarioRepository = new MockUserRepository();
+		usuarioRepository = new MockUsuarioRepository();
 	}
 }
