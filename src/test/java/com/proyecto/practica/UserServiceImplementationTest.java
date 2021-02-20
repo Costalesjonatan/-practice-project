@@ -12,18 +12,23 @@ import com.proyecto.practica.service.UsuarioService;
 
 class UserServiceImplementationTest {
 	
-	//aca tenes que seguir implementando los test
-	
-	private UsuarioRepository usuarioRepository;
+	private UsuarioRepository mockUsuarioRepository;
 	private UsuarioService usuarioService;
 	
 	@Test
 	public void shouldCreateUsuario() {
+		givenUserRepository();
+		givenUsuarioService();
 		usuarioService.registrar(Usuario.builder().id(1).username("jonatan").password("costales").build());
 		assertThat(usuarioService.findbyUsername("jonatan") != null);
 	}
 	
 	private void givenUserRepository() {
-		usuarioRepository = new MockUsuarioRepository();
+		mockUsuarioRepository = new MockUsuarioRepository();
 	}
+
+	private void givenUsuarioService() {
+		usuarioService = new UsuarioService(mockUsuarioRepository);
+	}
+	
 }
