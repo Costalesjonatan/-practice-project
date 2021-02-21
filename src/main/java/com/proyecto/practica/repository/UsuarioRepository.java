@@ -7,5 +7,5 @@ import com.proyecto.practica.model.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>  {
-	public Usuario findByUserName(String username);
+	public Usuario findByusername(String username);
 }

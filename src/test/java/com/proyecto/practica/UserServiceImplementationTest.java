@@ -34,7 +34,7 @@ class UserServiceImplementationTest {
 		Optional<Usuario> optionalUsuario = Optional.of(usuario);
 		when(usuarioRepository.save(usuario)).thenReturn(usuario);
 		when(usuarioRepository.findById((long) 1)).thenReturn(optionalUsuario);
-		when(usuarioRepository.findByUserName("jonatan")).thenReturn(usuario);
+		when(usuarioRepository.findByusername("jonatan")).thenReturn(usuario);
 		
 		
 		passwordEncoder = mock(BCryptPasswordEncoder.class);

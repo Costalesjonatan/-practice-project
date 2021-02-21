@@ -24,7 +24,7 @@ public class UsuarioServiceImplementation implements UsuarioService{
 	
 	@Override
 	public Usuario findbyUsername(String username) {
-		return usuarioRepository.findByUserName(username);
+		return usuarioRepository.findByusername(username);
 	}
 
 	@Override

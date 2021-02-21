@@ -17,7 +17,7 @@ public class MockUsuarioRepository implements UsuarioRepository{
 	private HashMap<Long, Usuario> usuarios = new HashMap<Long, Usuario>();
 	
 	@Override
-	public Usuario findByUserName(String username) {
+	public Usuario findByusername(String username) {
 		long id = 0;
 		
 		for(Long key : usuarios.keySet()) {

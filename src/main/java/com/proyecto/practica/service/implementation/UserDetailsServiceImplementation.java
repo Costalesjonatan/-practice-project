@@ -19,11 +19,11 @@ import lombok.AllArgsConstructor;
 public class UserDetailsServiceImplementation implements UserDetailsService {
 	
 	@Autowired
-	private UsuarioRepository userRepository; 
+	private UsuarioRepository usuarioRepository; 
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario = userRepository.findByUserName(username);
+		Usuario usuario = usuarioRepository.findByusername(username);
 		UserBuilder builder = null;
 		
 		if(usuario != null)
