@@ -2,70 +2,65 @@ package com.proyecto.practica;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mock;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.proyecto.practica.model.Usuario;
 import com.proyecto.practica.repository.UsuarioRepository;
-import com.proyecto.practica.service.UsuarioService;
 import com.proyecto.practica.service.implementation.UsuarioServiceImplementation;
 
 class UserServiceImplementationTest {
 	
-	private UsuarioRepository mockUsuarioRepository;
+	@Mock
+	private UsuarioRepository usuarioRepository;
+	@Mock
 	private BCryptPasswordEncoder passwordEncoder;
+	private UsuarioServiceImplementation usuarioService;
 	
-	@Autowired
-	private UsuarioService usuarioService;
+	private Usuario usuario;
 	
-	
-	@Test
-	public void shouldCreateUsuario() {
-		System.out.println(usuarioService != null);
-		givenUserRepository();
-		//when(mockUsuarioRepository.findById(any(long.class))
-		givenPasswordEnconder();
-		//givenUsuarioService();
+	@BeforeEach
+	public void setUp(){
 		
-		usuarioService.registrar(Usuario.builder().id(1).username("jonatan").password("costales").build());
-		Usuario usuario = mockUsuarioRepository.findById((long) 1).get();
+		usuarioRepository = mock(UsuarioRepository.class);
+		usuario = Usuario.builder().id(1).username("jonatan").password("costales").build();
+		Optional<Usuario> optionalUsuario = Optional.of(usuario);
+		when(usuarioRepository.save(usuario)).thenReturn(usuario);
+		when(usuarioRepository.findById((long) 1)).thenReturn(optionalUsuario);
+		when(usuarioRepository.findByUserName("jonatan")).thenReturn(usuario);
 		
-		assertTrue(usuario.getId() == 1);
-		assertThat(usuario).isNotNull();
-		System.out.println(usuario.toString());
-		assertTrue(passwordEncoder.matches("costales", usuario.getPassword()));
+		
+		passwordEncoder = mock(BCryptPasswordEncoder.class);
+		when(passwordEncoder.encode("costales")).thenReturn("1234");
+		
+		
+		usuarioService = new UsuarioServiceImplementation(usuarioRepository, passwordEncoder);
 	}
 	
 	@Test
-	public void shouldNotCreateUsuario() {
+	public void shouldCreateUsuario(){
+		usuarioService.registrar(usuario);
+		Usuario usuario = usuarioRepository.findById((long) 1).get();
 		
+		assertTrue(usuario.getId() == 1);
+		assertThat(usuario).isNotNull();
+		assertTrue(usuario.getPassword().equals("1234"));
 	}
 	
 	@Test
 	public void shouldFindUsuarioByUsername(){
-		givenUserRepository();
-		givenPasswordEnconder();
-		givenUsuarioService();
-		
-		usuarioService.registrar(Usuario.builder().id(1).username("jonatan").password("costales").build());
+		usuarioService.registrar(usuario);
 		Usuario usuario = usuarioService.findbyUsername("jonatan");
 		
 		assertTrue(usuario.getId() == 1);
 		assertThat(usuario).isNotNull();
-		assertTrue(passwordEncoder.matches("costales", usuario.getPassword()));
-	}
-	
-	private void givenUserRepository() {
-		mockUsuarioRepository = new MockUsuarioRepository();
-	}
-
-	private void givenUsuarioService() {
-		usuarioService = new UsuarioServiceImplementation(mockUsuarioRepository, passwordEncoder);
-	}
-	
-	private void givenPasswordEnconder() {
-		passwordEncoder = new BCryptPasswordEncoder();
+		assertTrue(usuario.getPassword().equals("1234"));
 	}
 }

@@ -13,9 +13,7 @@ import com.proyecto.practica.model.Usuario;
 import com.proyecto.practica.repository.UsuarioRepository;
 
 public class MockUsuarioRepository implements UsuarioRepository{
-	
-	
-	//tenes que implementa los metodos mock para el test del userService o averigua bien como funciona mockito
+
 	private HashMap<Long, Usuario> usuarios = new HashMap<Long, Usuario>();
 	
 	@Override
